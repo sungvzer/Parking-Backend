@@ -37,3 +37,19 @@ class Park(Resource):
         parking_slots[first_empty_slot].license_plate = license_plate
         return {'license_plate': license_plate, 'slot': first_empty_slot}, 200
 
+
+class Slot(Resource):
+    def get(self):
+        args = request.args
+        number = args.get('number')
+        if number is None:
+            return {'description': 'Expected a slot number argument'}, 401
+
+        number = int(number)
+        if number < 0 or number >= len(parking_slots):
+            return {'description': 'Invalid slot number'}, 401
+
+        slot = parking_slots[number]
+        return {
+            'slot_number': slot.number, 'license_plate': slot.license_plate, 'is_empty': slot.is_empty()
+        }, 200
