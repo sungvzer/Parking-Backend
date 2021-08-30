@@ -24,7 +24,7 @@ class Park(Resource):
         args = request.args
         license_plate = args.get('license_plate')
         if license_plate is None:
-            return {'description': 'Expected a license plate argument'}, 401
+            return {'description': 'Expected a license plate argument'}, 400
 
         first_empty_slot = find_first_empty_slot_index()
         if first_empty_slot == -1:
@@ -43,11 +43,11 @@ class Slot(Resource):
         args = request.args
         number = args.get('number')
         if number is None:
-            return {'description': 'Expected a slot number argument'}, 401
+            return {'description': 'Expected a slot number argument'}, 400
 
         number = int(number)
         if number < 0 or number >= len(parking_slots):
-            return {'description': 'Invalid slot number'}, 401
+            return {'description': 'Invalid slot number'}, 400
 
         slot = parking_slots[number]
         return {
@@ -60,7 +60,7 @@ class Unpark(Resource):
         args = request.args
         license_plate = args.get('license_plate')
         if license_plate is None:
-            return {'description': 'Expected a license plate argument'}, 401
+            return {'description': 'Expected a license plate argument'}, 400
 
         index = find_slot_containing(license_plate)
         if index == -1:
