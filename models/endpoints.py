@@ -53,3 +53,23 @@ class Slot(Resource):
         return {
             'slot_number': slot.number, 'license_plate': slot.license_plate, 'is_empty': slot.is_empty()
         }, 200
+
+
+class Unpark(Resource):
+    def get(self):
+        args = request.args
+        license_plate = args.get('license_plate')
+        if license_plate is None:
+            return {'description': 'Expected a license plate argument'}, 401
+
+        index = find_slot_containing(license_plate)
+        if index == -1:
+            return {'description': 'No car with this license plate is parked here'}, 404
+
+        slot = parking_slots[index]
+        result = {'license_plate': slot.license_plate,
+                  'slot_number': slot.number}
+
+        # Free the spot
+        parking_slots[index].free()
+        return result, 200
