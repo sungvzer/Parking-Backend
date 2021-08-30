@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Api
 from models.endpoints import Park, Slot, Unpark
 
 app = Flask(__name__)
