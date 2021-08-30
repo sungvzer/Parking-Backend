@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask import request
 from models.parking import parking_slots
+from auth import AuthResult, verify_auth
 
 
 def find_first_empty_slot_index() -> int:
@@ -23,6 +24,18 @@ class Park(Resource):
     def get(self):
         args = request.args
         license_plate = args.get('license_plate')
+        auth_result = verify_auth(args)
+
+        if auth_result != AuthResult.Success:
+            if auth_result == AuthResult.NoKey:
+                return {
+                    'description': 'Authentication key is required to use this API'
+                }, 401
+            elif auth_result == AuthResult.WrongKey:
+                return {
+                    'description': 'Wrong authentication key'
+                }, 401
+
         if license_plate is None:
             return {'description': 'Expected a license plate argument'}, 400
 
@@ -41,6 +54,19 @@ class Park(Resource):
 class Slot(Resource):
     def get(self):
         args = request.args
+
+        auth_result = verify_auth(args)
+
+        if auth_result != AuthResult.Success:
+            if auth_result == AuthResult.NoKey:
+                return {
+                    'description': 'Authentication key is required to use this API'
+                }, 401
+            elif auth_result == AuthResult.WrongKey:
+                return {
+                    'description': 'Wrong authentication key'
+                }, 401
+
         number = args.get('number')
         if number is None:
             return {'description': 'Expected a slot number argument'}, 400
@@ -58,6 +84,19 @@ class Slot(Resource):
 class Unpark(Resource):
     def get(self):
         args = request.args
+
+        auth_result = verify_auth(args)
+
+        if auth_result != AuthResult.Success:
+            if auth_result == AuthResult.NoKey:
+                return {
+                    'description': 'Authentication key is required to use this API'
+                }, 401
+            elif auth_result == AuthResult.WrongKey:
+                return {
+                    'description': 'Wrong authentication key'
+                }, 401
+
         license_plate = args.get('license_plate')
         if license_plate is None:
             return {'description': 'Expected a license plate argument'}, 400
