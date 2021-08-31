@@ -41,6 +41,9 @@ authentication_keys = None
 
 
 def ensure_keys_are_initialized():
+    """
+    Call this method before operating on authentication keys
+    """
     # Retrieve keys from the cache
     global authentication_keys
     if os.path.isfile('authenticated_users.json'):
