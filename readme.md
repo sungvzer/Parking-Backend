@@ -39,7 +39,7 @@ http://127.0.0.1:5000/park?auth_key=AUTH_KEY...
 ```
 
 ### API Endpoints
-The following list contains all the endpoints API endpoints and their relative HTTP method expected to be used.
+The following list contains all the API endpoints and their relative HTTP method expected to be used.
 
 | Name                                             | Link endpoint   | Description                                   |  Method  |
 | ------------------------------------------------ | :-------------: | :-------------------------------------------: | --------:|
