@@ -26,6 +26,7 @@ def verify_auth(args: dict) -> AuthResult:
 
     """
     auth_key = args.get('auth_key')
+    ensure_keys_are_initialized()
     if auth_key is None:
         return AuthResult.NoKey
 
@@ -37,6 +38,16 @@ def verify_auth(args: dict) -> AuthResult:
 
 
 authentication_keys = None
+
+
+def ensure_keys_are_initialized():
+    # Retrieve keys from the cache
+    global authentication_keys
+    if os.path.isfile('authenticated_users.json'):
+        with open('authenticated_users.json', 'r') as json_file:
+            authentication_keys = json.loads(json_file.read())
+    elif authentication_keys is None:
+        authentication_keys = {}
 
 
 class Authenticate(Resource):
@@ -67,19 +78,14 @@ class Authenticate(Resource):
                 'description': 'no password provided'
             }, 400
 
-        # Retrieve keys from the cache
-        if os.path.isfile('authenticated_users.json'):
-            with open('authenticated_users.json', 'r') as json_file:
-                authentication_keys = json.loads(json_file.read())
-            if username == 'admin' and password == 'AdminPassword' and username in authentication_keys:
+        ensure_keys_are_initialized()
+
+        if username == 'admin' and password == 'AdminPassword':
+            if username in authentication_keys:
                 return {
                     'description': 'success',
                     'key': authentication_keys[username]
                 }, 200
-        elif authentication_keys is None:
-            authentication_keys = {}
-
-        if username == 'admin' and password == 'AdminPassword':
             # Key generation via random bytes
             key = b2a_hex(os.urandom(32)).decode('utf-8')
 
