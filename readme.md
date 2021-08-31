@@ -12,6 +12,10 @@ Something like this:
 
 `~/drop_backend/ $ python3 ./script.py`
 
+## Editing parking size
+To edit the parking size, just edit the `PARKING_SLOTS` variable in the `.env` file contained in the repository.
+Should the file or the variable be deleted, the default parking size will be set to 0.
+
 ## Accessing the API
 ### Running the server
 By default, the server will run on the local machine, and will be accessible via localhost, default port being 5000.
