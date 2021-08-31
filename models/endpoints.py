@@ -5,6 +5,16 @@ from auth import AuthResult, verify_auth
 
 
 def find_first_empty_slot_index() -> int:
+    """
+    Finds the first empty parking slot
+
+    ## Return value
+
+        `int`:
+            summary: Index of the parking slot found, `-1` if no slots are available
+            example: `42`
+
+    """
     for index in range(len(parking_slots)):
         slot = parking_slots[index]
         if slot.is_empty():
@@ -13,6 +23,22 @@ def find_first_empty_slot_index() -> int:
 
 
 def find_slot_containing(license_plate: str) -> int:
+    """
+    Find the parking slot that contains a certain license plate
+
+    ## Attributes
+
+        `license_plate: str`:
+            summary: The license plate to be looked up
+            example: `'GE219OW'`
+
+    ## Return value
+
+        `int`:
+            summary: The parking slot number that contains the license plate, `-1` if it was not found
+            example: `2`
+    """
+
     for index in range(len(parking_slots)):
         if parking_slots[index].license_plate == license_plate:
             return index
@@ -21,6 +47,12 @@ def find_slot_containing(license_plate: str) -> int:
 
 
 class Park(Resource):
+    """
+    Parking resource, accessible at the `/park` endpoint via the `GET` HTTP method.
+
+    Used to park a license plate.
+    """
+
     def get(self):
         args = request.args
         license_plate = args.get('license_plate')
@@ -47,11 +79,18 @@ class Park(Resource):
         if slot_with_license_plate != -1:
             return {'description': f'Car with license plate {license_plate} is already parked in slot {slot_with_license_plate}'}, 403
 
+        # By assigning a license plate, the slot is automatically considered non-empty
         parking_slots[first_empty_slot].license_plate = license_plate
         return {'license_plate': license_plate, 'slot': first_empty_slot}, 200
 
 
 class Slot(Resource):
+    """
+    Slot resource, accessible at the `/slot` endpoint via the `GET` HTTP method.
+
+    It is used to lookup a certain slot's information.
+    """
+
     def get(self):
         args = request.args
 
@@ -82,6 +121,12 @@ class Slot(Resource):
 
 
 class Unpark(Resource):
+    """
+    Unpark resource, accessible at the `/unpark` endpoint via the `GET` HTTP method.
+
+    Removes a certain license plate from the parking.
+    """
+
     def get(self):
         args = request.args
 

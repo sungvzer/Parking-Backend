@@ -1,4 +1,9 @@
 class ParkingSlot:
+    """
+    Parking slot class, contains its number and the corresponding license plate.
+    If `license_plate` is an empty string, or `None`, it is considered empty.
+    """
+
     def __init__(self, number):
         self.license_plate = ""
         self.number = number

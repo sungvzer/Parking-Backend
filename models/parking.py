@@ -13,4 +13,5 @@ elif parking_slots_size is str:
 # Make sure it is converted into a number
 parking_slots_size = int(parking_slots_size)
 
+# Module list initialization
 parking_slots = [ParkingSlot(x) for x in range(parking_slots_size)]
