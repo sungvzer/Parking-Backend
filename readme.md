@@ -19,7 +19,7 @@ Something like this:
 
 ## Editing parking size
 To edit the parking size, just edit the `PARKING_SLOTS` variable in the `.env` file contained in the repository.
-Should the file or the variable be deleted, the default parking size will be set to 0.
+Should the file or the variable be deleted, the default parking size will be set to 5.
 
 ## Accessing the API
 ### Running the server
