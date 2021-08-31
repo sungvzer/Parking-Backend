@@ -1,4 +1,4 @@
-from tests.server_test import resize_parking, script, Auth, clear_parking
+from tests.utilities import resize_parking, script, Auth, clear_parking
 import pytest
 from flask.testing import FlaskClient
 
