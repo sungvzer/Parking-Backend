@@ -1,11 +1,6 @@
 from api.auth import Authenticate
-from flask import Flask
-from flask_restful import Api
 from api.endpoints import Home, Park, Slot, Unpark
-
-# App initialization
-app = Flask(__name__)
-api = Api(app)
+from api.initializer import api, app
 
 # Endpoint setup
 api.add_resource(Home, '/')
