@@ -1,24 +1,10 @@
-from binascii import b2a_hex
-from flask_restful import Resource, reqparse
-from flask import request
 import os
+from binascii import b2a_hex
 
-from enum import Enum
+from flask import request
+from flask_restful import Resource
 
-
-class AuthResult(Enum):
-    """
-    Authentication result
-
-    ## Meaning
-
-        `Success`: valid authentication
-        `NoKey`: no authentication key provided
-        `WrongKey`: authentication key is not valid
-    """
-    Success = 0
-    NoKey = 1
-    WrongKey = 2
+from models.auth_results import AuthResult
 
 
 def verify_auth(args: dict) -> AuthResult:

@@ -1,7 +1,7 @@
-from auth import Authenticate
+from api.auth import Authenticate
 from flask import Flask
 from flask_restful import Api
-from models.endpoints import Home, Park, Slot, Unpark
+from api.endpoints import Home, Park, Slot, Unpark
 
 # App initialization
 app = Flask(__name__)

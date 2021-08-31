@@ -2,7 +2,7 @@ from models.parking_slot import ParkingSlot
 from flask.testing import FlaskClient
 import pytest
 import script
-from models.parking import resize_parking, parking_slots_size
+from modules.parking import resize_parking, parking_slots_size
 
 
 @pytest.fixture
