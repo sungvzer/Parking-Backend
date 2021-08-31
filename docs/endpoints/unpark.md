@@ -13,6 +13,11 @@ GET
 - `auth_key`: The authentication key obtained via the [/authenticate](./authenticate.md) endpoint.
 - `license_plate`: The license plate to be removed.
 
+## Usage example
+```
+/unpark?auth_key=92fdb80ac10&license_plate=LP1
+```
+
 ## Response HTTP codes
 - 200: Successful request
 - 400: Malformed request, missing a required argument or more

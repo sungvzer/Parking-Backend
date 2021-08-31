@@ -13,6 +13,11 @@ GET
 - `auth_key`: The authentication key obtained via the [/authenticate](./authenticate.md) endpoint.
 - `license_plate`: The car's license plate that needs to be parked.
 
+## Usage example
+```
+/park?auth_key=92fdb80ac10&license_plate=LP1
+```
+
 ## Response HTTP codes
 - 200: Successful request
 - 400: Malformed request, missing a required argument or more

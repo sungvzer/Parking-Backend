@@ -13,6 +13,11 @@ GET
 - `auth_key`: The authentication key obtained via the [/authenticate](./authenticate.md) endpoint.
 - `number`: The parking slot that needs to be queried.
 
+## Usage example
+```
+/slot?auth_key=92fdb80ac10&number=0
+```
+
 ## Response HTTP codes
 - 200: Successful request
 - 400: Malformed request, missing a required argument or more, or the parking slot is outside the existing bounds (e.g. a negative slot, or one that's bigger than the size of the parking)
