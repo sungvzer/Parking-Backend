@@ -1,4 +1,8 @@
 # Parking API
+
+<p align=center><img src="./docs/parking.svg" width=100/></p>
+
+
 ## Running the back-end server
 There are a few requirements to run this application:
 - [Python 3.9.6](https://www.python.org/downloads/) or newer
