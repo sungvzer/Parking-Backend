@@ -30,12 +30,19 @@ def authenticate(client: FlaskClient, username, password):
     return client.post('/authenticate', data=dict(username=username, password=password))
 
 
-def get_authentication_key(client: FlaskClient) -> str:
-    auth_response = authenticate(client, 'admin', 'AdminPassword')
-    decoded_json = auth_response.json
+class Auth:
+    _currentKey = ""
 
-    assert 'key' in decoded_json
-    return decoded_json['key']
+    def get_authentication_key(client: FlaskClient) -> str:
+        if Auth._currentKey != '':
+            return Auth._currentKey
+
+        auth_response = authenticate(client, 'admin', 'AdminPassword')
+        decoded_json = auth_response.json
+
+        assert 'key' in decoded_json
+        Auth._currentKey = decoded_json['key']
+        return decoded_json['key']
 
 
 def test_authentication_succeeds(client: FlaskClient):
@@ -71,7 +78,7 @@ def test_authentication_fails_on_wrong_credentials(client: FlaskClient):
 
 
 def test_parking_succeeds(client: FlaskClient):
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
     args = {
         'auth_key': auth_key,
         'license_plate': 'LP0'
@@ -82,7 +89,7 @@ def test_parking_succeeds(client: FlaskClient):
 
 
 def test_parking_fails_on_malformed_request(client: FlaskClient):
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
     # Malformed request
     args = {
         'auth_key': auth_key
@@ -93,7 +100,7 @@ def test_parking_fails_on_malformed_request(client: FlaskClient):
 
 def test_parking_fails_if_already_parked(client: FlaskClient):
     clear_parking()
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
     args = {
         'auth_key': auth_key,
         'license_plate': 'LP0'
@@ -121,7 +128,7 @@ def test_parking_fails_on_bad_authentication(client: FlaskClient):
 def test_parking_fails_if_full(client: FlaskClient):
     resize_parking(1)
 
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
     args = {
         'auth_key': auth_key,
         'license_plate': 'LP0'
@@ -139,7 +146,7 @@ def test_parking_fails_if_full(client: FlaskClient):
 
 
 def test_unpark_succeeds(client: FlaskClient):
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
 
     # First, park the car
     args = {
@@ -155,7 +162,7 @@ def test_unpark_succeeds(client: FlaskClient):
 
 
 def test_unpark_fails_on_malformed_request(client: FlaskClient):
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
 
     args = {
         'auth_key': auth_key,
@@ -175,7 +182,7 @@ def test_unpark_fails_on_bad_authentication(client: FlaskClient):
 
 def test_unpark_fails_if_car_is_not_found(client: FlaskClient):
     args = {
-        'auth_key': get_authentication_key(client),
+        'auth_key': Auth.get_authentication_key(client),
         'license_plate': 'LP1'
     }
     r = client.get('/unpark', query_string=args)
@@ -183,7 +190,7 @@ def test_unpark_fails_if_car_is_not_found(client: FlaskClient):
 
 
 def test_slot_succeeds(client: FlaskClient):
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
     args = {
         'auth_key': auth_key,
         'license_plate': 'LP1'
@@ -204,7 +211,7 @@ def test_slot_succeeds(client: FlaskClient):
 
 
 def test_slot_fails_on_malformed_request(client: FlaskClient):
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
 
     args = {
         'auth_key': auth_key,
@@ -217,7 +224,7 @@ def test_slot_fails_on_malformed_request(client: FlaskClient):
 
 def test_slot_fails_on_wrong_slot_numbers(client: FlaskClient):
     resize_parking(3)
-    auth_key = get_authentication_key(client)
+    auth_key = Auth.get_authentication_key(client)
     args = {
         'auth_key': auth_key,
         'number': -1
