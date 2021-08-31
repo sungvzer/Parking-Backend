@@ -1,5 +1,6 @@
 import os
 from binascii import b2a_hex
+import json
 
 from flask import request
 from flask_restful import Resource
@@ -35,7 +36,7 @@ def verify_auth(args: dict) -> AuthResult:
     return AuthResult.WrongKey
 
 
-authentication_keys = {}
+authentication_keys = None
 
 
 class Authenticate(Resource):
@@ -47,7 +48,12 @@ class Authenticate(Resource):
 
     decorators = [limiter.limit("10/minute", methods=["POST"])]
 
+    def dump_keys(self):
+        with open('authenticated_users.json', 'w+') as f:
+            f.write(json.dumps(authentication_keys))
+
     def post(self):
+        global authentication_keys
         args = request.form
 
         username = args['username']
@@ -60,12 +66,26 @@ class Authenticate(Resource):
             return {
                 'description': 'no password provided'
             }, 400
+
+        # Retrieve keys from the cache
+        if os.path.isfile('authenticated_users.json'):
+            with open('authenticated_users.json', 'r') as json_file:
+                authentication_keys = json.loads(json_file.read())
+            if username == 'admin' and password == 'AdminPassword' and username in authentication_keys:
+                return {
+                    'description': 'success',
+                    'key': authentication_keys[username]
+                }, 200
+        elif authentication_keys is None:
+            authentication_keys = {}
+
         if username == 'admin' and password == 'AdminPassword':
             # Key generation via random bytes
             key = b2a_hex(os.urandom(32)).decode('utf-8')
 
             # Assign it to the global keys map
             authentication_keys[username] = key
+            self.dump_keys()
             return {
                 'description':
                 'success',

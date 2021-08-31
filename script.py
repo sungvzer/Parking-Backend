@@ -1,6 +1,11 @@
+import os
 from api.auth import Authenticate
 from api.endpoints import Home, Park, Slot, Unpark
 from api.initializer import api, app
+
+# Delete cached user login keys
+if os.path.isfile('authenticated_users.json'):
+    os.remove('authenticated_users.json')
 
 # Endpoint setup
 api.add_resource(Home, '/')
