@@ -7,5 +7,5 @@ $authenticationResponse = Invoke-WebRequest '127.0.0.1:5000/authenticate' -Body 
 
 $authenticationKey = $authenticationResponse.Content
 
-"Logged in, token is:"
+"Logged in, authentication key is:"
 $($authenticationKey|ConvertFrom-Json).key

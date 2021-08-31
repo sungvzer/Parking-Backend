@@ -17,14 +17,14 @@ def verify_auth(args: dict) -> AuthResult:
     if auth_key is None:
         return AuthResult.NoKey
 
-    for entry in tokens.values():
+    for entry in authentication_keys.values():
         if entry == auth_key:
             return AuthResult.Success
 
     return AuthResult.WrongKey
 
 
-tokens = {}
+authentication_keys = {}
 
 
 class Authenticate(Resource):
@@ -46,7 +46,7 @@ class Authenticate(Resource):
         if username == 'admin' and password == 'AdminPassword':
             key = b2a_hex(os.urandom(32)).decode('utf-8')
             print(key)
-            tokens[username] = key
+            authentication_keys[username] = key
             return {
                 'description':
                 'success',
