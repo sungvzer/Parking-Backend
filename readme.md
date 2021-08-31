@@ -19,18 +19,22 @@ By default, the server will run on the local machine, and will be accessible via
 Should any of this information change, there will be a message right when the script starts, containing the correct address and port to connect to.
 
 ### Authenticating
-At the moment every action on the API needs authentication, which can be achieved with a POST request to the `/authenticate` endpoint.
-The `Content-Type` of the request is expected to be `application/json` and the `Content` of the request is a JSON object containing two keys, `username` and `password`, and the corresponding values.
+At the moment every action on the API needs authentication, which can be achieved with a POST request to the [/authenticate](./docs/endpoints/authenticate.md) endpoint.
 
-Valid credentials are hard-coded at the moment, and they are
-`admin:AdminPassword`.
-
-If the authentication succeeds, the request will return a `200` HTTP code, with the content being a JSON object, where the 'key' is the authentication key to be used with any GET request to the API.
-
-To make life a bit easier, the `authenticate.ps1` will print out the current key to use with the server. It needs to run under PowerShell.
+To make life a bit easier, the `authenticate.ps1` script will print out the current key to use with the server. It needs to run under PowerShell.
 
 To authenticate a GET request to the API, just add an `auth_key` argument, and include the authentication key. For example:
 
 ```
 http://127.0.0.1:5000/park?auth_key=AUTH_KEY...
 ```
+
+### API Endpoints
+The following list contains all the endpoints API endpoints and their relative HTTP method expected to be used.
+
+| Name                                             | Link endpoint   | Description                                   |  Method  |
+| ------------------------------------------------ | :-------------: | :-------------------------------------------: | --------:|
+| [Park](./docs/endpoints/park.md)                 | `/park`         | Add a license plate to the parking            | GET      |
+| [Unpark](./docs/endpoints/unpark.md)             | `/unpark`       | Remove a license plate from the parking       | GET      |
+| [Slot](./docs/endpoints/slot.md)                 | `/slot`         | Query a certain slot in the parking           | GET      |
+| [Authenticate](./docs/endpoints/authenticate.md) | `/authenticate` | Retrieve an authentication key to use the API | POST     |
