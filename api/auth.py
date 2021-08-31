@@ -5,6 +5,7 @@ from flask import request
 from flask_restful import Resource
 
 from models.auth_results import AuthResult
+from api.initializer import limiter
 
 
 def verify_auth(args: dict) -> AuthResult:
@@ -43,6 +44,8 @@ class Authenticate(Resource):
 
     Returns the authentication key that needs to be used with every other API call.
     """
+
+    decorators = [limiter.limit("10/minute", methods=["POST"])]
 
     def post(self):
         args = request.form

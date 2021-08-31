@@ -5,6 +5,7 @@ from flask import request
 from modules.parking import find_slot_containing, parking_slots, find_first_empty_slot_index
 from api.auth import verify_auth
 from models.auth_results import AuthResult
+from api.initializer import limiter
 
 
 class Home(Resource):
@@ -13,6 +14,8 @@ class Home(Resource):
 
     Used to test connection
     """
+
+    decorators = [limiter.limit("10/minute", methods=["GET"])]
 
     def get(self):
         return Response("Successful connection", mimetype="text/plain", status=200)
@@ -27,6 +30,8 @@ class Park(Resource):
 
     Used to park a license plate.
     """
+
+    decorators = [limiter.limit("10/minute", methods=["GET"])]
 
     def get(self):
         args = request.args
@@ -66,6 +71,8 @@ class Slot(Resource):
     It is used to lookup a certain slot's information.
     """
 
+    decorators = [limiter.limit("10/minute", methods=["GET"])]
+
     def get(self):
         args = request.args
 
@@ -101,6 +108,8 @@ class Unpark(Resource):
 
     Removes a certain license plate from the parking.
     """
+
+    decorators = [limiter.limit("10/minute", methods=["GET"])]
 
     def get(self):
         args = request.args
