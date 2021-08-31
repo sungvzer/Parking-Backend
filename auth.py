@@ -63,11 +63,11 @@ class Authenticate(Resource):
 
         username = args['username']
         password = args['password']
-        if username is None:
+        if username is None or username == '':
             return {
                 'description': 'no username provided'
             }, 400
-        if password is None:
+        if password is None or password == '':
             return {
                 'description': 'no password provided'
             }, 400
