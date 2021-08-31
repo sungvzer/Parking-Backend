@@ -1,3 +1,5 @@
+from http import HTTPStatus
+from flask.wrappers import Response
 from flask_restful import Resource
 from flask import request
 from models.parking import parking_slots
@@ -44,6 +46,20 @@ def find_slot_containing(license_plate: str) -> int:
             return index
 
     return -1
+
+
+class Home(Resource):
+    """
+    Home resource, accessible at the `/` endpoint via the `GET` HTTP method.
+
+    Used to test connection
+    """
+
+    def get(self):
+        return Response("Successful connection", mimetype="text/plain", status=200)
+
+    def post(self):
+        return Response("Successful connection", mimetype="text/plain", status=200)
 
 
 class Park(Resource):
