@@ -45,7 +45,7 @@ class Park(Resource):
 
         slot_with_license_plate = find_slot_containing(license_plate)
         if slot_with_license_plate != -1:
-            return {'description': f'Car with license plate {license_plate} is already parked in slot {slot_with_license_plate}'}
+            return {'description': f'Car with license plate {license_plate} is already parked in slot {slot_with_license_plate}'}, 403
 
         parking_slots[first_empty_slot].license_plate = license_plate
         return {'license_plate': license_plate, 'slot': first_empty_slot}, 200
