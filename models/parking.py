@@ -15,3 +15,23 @@ parking_slots_size = int(parking_slots_size)
 
 # Module list initialization
 parking_slots = [ParkingSlot(x) for x in range(parking_slots_size)]
+
+
+def resize_parking(size: int) -> None:
+    """
+    Change parking slots number.
+    THIS ACTION WILL FREE ANY OCCUPIED PARKING SLOT
+
+    ## Attributes
+
+        `size: int`:
+            summary: New parking size
+            example: `2`
+
+    """
+    global parking_slots
+    global parking_slots_size
+    parking_slots.clear()
+    parking_slots_size = size
+    for x in range(size):
+        parking_slots.append(ParkingSlot(x))
