@@ -47,6 +47,7 @@ The following list contains all the endpoints API endpoints and their relative H
 | [Unpark](./docs/endpoints/unpark.md)             | `/unpark`       | Remove a license plate from the parking       | GET      |
 | [Slot](./docs/endpoints/slot.md)                 | `/slot`         | Query a certain slot in the parking           | GET      |
 | [Authenticate](./docs/endpoints/authenticate.md) | `/authenticate` | Retrieve an authentication key to use the API | POST     |
+||
 
 ## Testing
 The API uses `pytest` for testing. See [Testing](./docs/testing/test.md) for more information. 
