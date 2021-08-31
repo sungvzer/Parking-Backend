@@ -3,7 +3,7 @@ $body = @{
     password = 'AdminPassword'
 }
 
-$authenticationResponse = Invoke-WebRequest '127.0.0.1:5000/authenticate' -Body $($body|ConvertTo-Json) -ContentType 'application/json' -Method 'POST'
+$authenticationResponse = Invoke-WebRequest '127.0.0.1:5000/authenticate' -Body $body -Method 'POST'
 
 $authenticationKey = $authenticationResponse.Content
 

@@ -9,10 +9,10 @@ Valid credentials are hard-coded at the moment, and they are
 `/authenticate`
 
 ## Method
-POST with `Content-Type: application/json`
+POST with form data
 
 ## Arguments
-All of them need to be included in a json encoded object
+All of them need to be included in form data
 - `username`: Identifying the current user that needs to authenticate
 - `password`: Password relative to the username
 

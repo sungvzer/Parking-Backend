@@ -1,10 +1,11 @@
 # Parking API
 ## Running the back-end server
 There are a few requirements to run this application:
-- [Python 3.9.6 or newer](https://www.python.org/downloads/)
-- [Flask 2.0.1 or newer](https://pypi.org/project/Flask/)
-- [Flask-RESTful 0.3.9 or newer](https://pypi.org/project/Flask-RESTful/)
-- [python-dotenv 0.19.0 or newer](https://pypi.org/project/python-dotenv/)
+- [Python 3.9.6](https://www.python.org/downloads/) or newer
+- [Flask 2.0.1](https://pypi.org/project/Flask/) or newer
+- [Flask-RESTful 0.3.9](https://pypi.org/project/Flask-RESTful/) or newer
+- [python-dotenv 0.19.0](https://pypi.org/project/python-dotenv/) or newer
+- [pytest 6.2.5](https://pypi.org/project/pytest/) or newer (only needed to run tests)
 
 After installing the necessary packages, just run `script.py`, having the root of this repository as current directory in the terminal.
 

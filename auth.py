@@ -59,8 +59,7 @@ class Authenticate(Resource):
     """
 
     def post(self):
-        args = request.json
-        print(args)
+        args = request.form
 
         username = args['username']
         password = args['password']
@@ -75,7 +74,6 @@ class Authenticate(Resource):
         if username == 'admin' and password == 'AdminPassword':
             # Key generation via random bytes
             key = b2a_hex(os.urandom(32)).decode('utf-8')
-            print(key)
 
             # Assign it to the global keys map
             authentication_keys[username] = key
